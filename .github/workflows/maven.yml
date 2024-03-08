@@ -32,4 +32,4 @@ jobs:
       - name: Wait 15 seconds for the application to start
         run: sleep 15
       - name: Run Postman REST API tests
-        run: newman run src/test/java/com/forum/spcbackend/ApiTests.postman_collection.json
+        run: newman run src/test/java/com/album/albumrater/AlbumraterAPI.postman_collection.json
