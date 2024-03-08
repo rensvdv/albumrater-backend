@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "42177af9-5662-4e6a-8c91-37bbf2611c54",
-		"name": "Albumrater API",
+		"name": "AlbumraterAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26118821"
 	},
@@ -34,7 +34,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"5\",\r\n    \"name\": \"hallooo\"\r\n}",
+					"raw": "{\r\n    \"title\": \"Album1\",\r\n    \"artist\": \"artiest\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -42,7 +42,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/Task",
+					"raw": "http://localhost:8080/api/albums",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -50,7 +50,7 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"Task"
+						"albums"
 					]
 				}
 			},
@@ -84,11 +84,23 @@
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8080/api/Task",
+					"raw": "http://localhost:8080/api/albums",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -96,7 +108,7 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"Task"
+						"albums"
 					]
 				}
 			},
