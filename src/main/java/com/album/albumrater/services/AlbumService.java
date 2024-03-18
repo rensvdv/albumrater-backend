@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlbumService {
@@ -18,6 +19,28 @@ public class AlbumService {
 
     public void createAlbum(Album album) {
         albumRepository.save(album);
+    }
+
+    public boolean updateAlbum(Album album) {
+        boolean success = false;
+        Optional<Album> oldAlbum = albumRepository.findById(album.getId());
+
+        if(oldAlbum.isPresent()) {
+            albumRepository.save(album);
+            success = true;
+        }
+        return success;
+    }
+
+    public boolean deleteAlbum(int id) {
+        boolean success = false;
+        Optional<Album> album = albumRepository.findById(id);
+
+        if(album.isPresent()) {
+            albumRepository.deleteById(id);
+            success = true;
+        }
+        return success;
     }
 
 }

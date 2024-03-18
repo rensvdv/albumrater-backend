@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-//@CrossOrigin(origins = "")
+@CrossOrigin(origins = "http://localhost:5173/")
 @RequestMapping("/api/albums")
 public class AlbumController {
 
@@ -43,5 +43,29 @@ public class AlbumController {
         Album album = albumMapper.toAlbum(albumDTO);
         albumService.createAlbum(album);
         return new ResponseEntity<>("Album Added", HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<String> updateAlbum (@RequestBody AlbumDTO albumDTO) {
+        Album album = albumMapper.toAlbum(albumDTO);
+        boolean success = albumService.updateAlbum(album);
+
+        if(success) {
+            return new ResponseEntity<>("Album updated", HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>("Album not updated", HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAlbum(@PathVariable int id) {
+        boolean success = albumService.deleteAlbum(id);
+
+        if(success) {
+            return new ResponseEntity<>("Album deleted", HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>("Album not deleted", HttpStatus.NOT_ACCEPTABLE);
+        }
+
     }
 }
