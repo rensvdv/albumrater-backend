@@ -38,6 +38,19 @@ public class AlbumController {
         return ResponseEntity.ok(albumDTOS);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AlbumDTO> getAlbumById(@PathVariable int id) {
+        Album album = this.albumService.getAlbumById(id);
+
+        if(album != null) {
+            AlbumDTO albumDTO = this.albumMapper.toAlbumDTO(album);
+            return ResponseEntity.ok(albumDTO);
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
+        }
+    }
+
     @PostMapping()
     public ResponseEntity<String> addAlbum(@RequestBody AlbumDTO albumDTO) {
         Album album = albumMapper.toAlbum(albumDTO);

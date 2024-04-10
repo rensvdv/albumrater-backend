@@ -17,6 +17,10 @@ public class AlbumService {
         return albumRepository.findAll();
     }
 
+    public Album getAlbumById(int id) {
+        return albumRepository.findById(id).orElse(null);
+    }
+
     public void createAlbum(Album album) {
         albumRepository.save(album);
     }
