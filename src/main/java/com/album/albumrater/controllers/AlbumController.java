@@ -1,9 +1,11 @@
 package com.album.albumrater.controllers;
 
 import com.album.albumrater.dto.AlbumDTO;
+import com.album.albumrater.dto.SpotifyData;
 import com.album.albumrater.logic.Album;
 import com.album.albumrater.mappers.AlbumMapper;
 import com.album.albumrater.services.AlbumService;
+import com.album.albumrater.services.SpotifyAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +22,13 @@ public class AlbumController {
     private AlbumService albumService;
     private AlbumMapper albumMapper;
 
+    private SpotifyAPI spotifyAPI;
+
     @Autowired
-    public AlbumController(AlbumService albumService, AlbumMapper albumMapper) {
+    public AlbumController(AlbumService albumService, AlbumMapper albumMapper, SpotifyAPI spotifyAPI) {
         this.albumMapper = albumMapper;
         this.albumService = albumService;
+        this.spotifyAPI = spotifyAPI;
     }
 
     @GetMapping()
@@ -38,6 +43,12 @@ public class AlbumController {
         return ResponseEntity.ok(albumDTOS);
     }
 
+    @PostMapping("/save")
+    public ResponseEntity<Album> spotifyAPI(@RequestBody SpotifyData spotifyData)
+    {
+        Album album = this.spotifyAPI.requestArtistInfo(spotifyData.artistName, spotifyData.accessToken);
+        return new ResponseEntity<>(album, HttpStatus.CREATED);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<AlbumDTO> getAlbumById(@PathVariable int id) {
         Album album = this.albumService.getAlbumById(id);
