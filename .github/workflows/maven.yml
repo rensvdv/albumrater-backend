@@ -26,7 +26,7 @@ jobs:
         run: mvn -B package --file pom.xml   
         
       - name: Start the Springboot application
-        run: nohup mvn spring-boot:run > /dev/null 2>&1 &
+        run: nohup mvn spring-boot:run >&/dev/null
       - name: Wait 15 seconds for the application to start
         run: sleep 15
       - name: Run Postman REST API tests
