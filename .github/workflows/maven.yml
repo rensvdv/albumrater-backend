@@ -23,13 +23,7 @@ jobs:
         run: npm install -g newman    
           
       - name: Create the JAR file with Maven
-        run: mvn package -DskipTests    
-      - name: Run the Unit tests
-        run: mvn test -Dgroups="UnitTest"
+        run: mvn -B package 
         
-      - name: Start the Springboot application
-        run: nohup mvn spring-boot:run > /dev/null 2>&1 &
-      - name: Wait 15 seconds for the application to start
-        run: sleep 15
       - name: Run Postman REST API tests
         run: newman run src/test/java/com/album/albumrater/AlbumraterAPI.postman_collection.json
