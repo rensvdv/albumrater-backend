@@ -1,23 +1,27 @@
-name: Java CI with Maven
+name: Java CI
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          
+      - name: Install Newman to run REST API test
+        run: npm install -g newman    
+          
+      - name: Build with Maven
+        run: mvn package   
+        
+      - name: Start the Springboot application
+        run: nohup mvn spring-boot:run
+      - name: Wait 15 seconds for the application to start
+        run: sleep 15
+      - name: Run Postman REST API tests
+        run: newman run src/test/java/com/album/albumrater/AlbumraterAPI.postman_collection.json
