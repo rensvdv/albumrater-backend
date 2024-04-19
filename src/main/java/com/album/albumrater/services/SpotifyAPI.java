@@ -11,8 +11,7 @@ import java.net.URL;
 
 @Service
 public class SpotifyAPI {
-    public static Album requestArtistInfo(String artistInput, String accessToken) {
-        System.out.println("YIPEEEEEE :D");
+    public static Album getAlbumsFromArtistWithSpotify(String artistInput, String accessToken) {
         try {
             String url = "https://api.spotify.com/v1/search?q=artist:" + artistInput.replace(" ", "+") + "&type=track&limit=1";
             URL apiUrl = new URL(url);
@@ -31,15 +30,15 @@ public class SpotifyAPI {
                 }
                 in.close();
 
-
-                // Parse JSON string to JsonElement
+                //response omzetten naar een json object
                 JsonElement jsonElement = JsonParser.parseString(response.toString());
-                // Convert JsonElement to JsonObject
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+                //de structuur van de json response is gecompliceerd, er zitten veel arrays in arrays
+                //arrays van de response in objecten zetten
                 JsonObject tracksObject = jsonObject.getAsJsonObject("tracks");
                 JsonArray itemsArray = tracksObject.getAsJsonArray("items");
 
-                System.out.println(itemsArray);
                 String albumName = "";
                 String artistName = artistInput;
                 String albumRelease = "";
@@ -49,7 +48,6 @@ public class SpotifyAPI {
 
                 for (JsonElement json : itemsArray) {
                     JsonObject itemObject = json.getAsJsonObject();
-                    System.out.println(itemObject);
                     JsonObject albumObject = itemObject.getAsJsonObject("album");
                     albumName = albumObject.get("name").getAsString();
                     albumRelease = albumObject.get("release_date").getAsString();
@@ -63,9 +61,8 @@ public class SpotifyAPI {
                         albumArt = imageObject.get("url").getAsString();
                     }
                 }
-                Album album = new Album(1, albumName, artistName, albumRelease, albumLink, albumArt);
+                Album album = new Album(0, albumName, artistName, albumRelease, albumLink, albumArt);
 
-                System.out.println(album);
                 return album;
             } else {
                 System.out.println("Request failed: " + responseCode);

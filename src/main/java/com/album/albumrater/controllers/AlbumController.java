@@ -43,12 +43,6 @@ public class AlbumController {
         return ResponseEntity.ok(albumDTOS);
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<Album> spotifyAPI(@RequestBody SpotifyData spotifyData)
-    {
-        Album album = this.spotifyAPI.requestArtistInfo(spotifyData.artistName, spotifyData.accessToken);
-        return new ResponseEntity<>(album, HttpStatus.CREATED);
-    }
     @GetMapping("/{id}")
     public ResponseEntity<AlbumDTO> getAlbumById(@PathVariable int id) {
         Album album = this.albumService.getAlbumById(id);
@@ -91,5 +85,11 @@ public class AlbumController {
             return new ResponseEntity<>("Album not deleted", HttpStatus.NOT_ACCEPTABLE);
         }
 
+    }
+    @PostMapping("/save")
+    public ResponseEntity<Album> spotifyAPI(@RequestBody SpotifyData spotifyData)
+    {
+        Album album = this.spotifyAPI.getAlbumsFromArtistWithSpotify(spotifyData.artistName, spotifyData.accessToken);
+        return new ResponseEntity<>(album, HttpStatus.CREATED);
     }
 }
