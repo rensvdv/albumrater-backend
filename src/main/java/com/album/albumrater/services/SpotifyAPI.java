@@ -17,7 +17,8 @@ public class SpotifyAPI {
     @Autowired
     private AlbumRepository albumRepository;
 
-    public Album getAlbumsFromArtistWithSpotify(String artistInput, String accessToken) {
+    public boolean getAlbumsFromArtistWithSpotify(String artistInput, String accessToken) {
+        boolean success = false;
         try {
             String url = "https://api.spotify.com/v1/search?q=artist:" + artistInput.replace(" ", "+") + "&type=track&limit=1";
             URL apiUrl = new URL(url);
@@ -68,14 +69,14 @@ public class SpotifyAPI {
                 }
                 Album album = new Album(0, albumName, artistName, albumRelease, albumLink, albumArt);
                 this.albumRepository.save(album);
-                return album;
+                success = true;
             } else {
                 System.out.println("Request failed: " + responseCode);
-                return null;
             }
+            return success;
         } catch (IOException e) {
             System.out.println("RequestArtistInfo: " + e.getMessage());
-            return null;
+            return false;
         }
     }
 }
