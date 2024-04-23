@@ -9,4 +9,7 @@ public class AlbumDTO {
     public int id;
     public String title;
     public String artist;
+    private String releaseDate;
+    private String albumLink;
+    private String albumArt;
 }

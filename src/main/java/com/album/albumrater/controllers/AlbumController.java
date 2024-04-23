@@ -87,9 +87,9 @@ public class AlbumController {
 
     }
     @PostMapping("/save")
-    public ResponseEntity<Album> spotifyAPI(@RequestBody SpotifyData spotifyData)
+    public ResponseEntity<String> spotifyAPI(@RequestBody SpotifyData spotifyData)
     {
-        Album album = this.spotifyAPI.getAlbumsFromArtistWithSpotify(spotifyData.artistName, spotifyData.accessToken);
-        return new ResponseEntity<>(album, HttpStatus.CREATED);
+        this.spotifyAPI.getAlbumsFromArtistWithSpotify(spotifyData.artist, spotifyData.accessToken);
+        return new ResponseEntity<>("Album added", HttpStatus.CREATED);
     }
 }

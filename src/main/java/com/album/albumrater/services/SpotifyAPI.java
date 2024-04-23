@@ -1,6 +1,8 @@
 package com.album.albumrater.services;
 import com.album.albumrater.logic.Album;
+import com.album.albumrater.repositories.AlbumRepository;
 import com.google.gson.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -11,7 +13,11 @@ import java.net.URL;
 
 @Service
 public class SpotifyAPI {
-    public static Album getAlbumsFromArtistWithSpotify(String artistInput, String accessToken) {
+
+    @Autowired
+    private AlbumRepository albumRepository;
+
+    public Album getAlbumsFromArtistWithSpotify(String artistInput, String accessToken) {
         try {
             String url = "https://api.spotify.com/v1/search?q=artist:" + artistInput.replace(" ", "+") + "&type=track&limit=1";
             URL apiUrl = new URL(url);
@@ -55,14 +61,13 @@ public class SpotifyAPI {
                     JsonObject URLObject = albumObject.getAsJsonObject("external_urls");
                     albumLink = URLObject.get("spotify").getAsString();
 
-                    JsonArray ImageArray = albumObject.getAsJsonArray("images");
-                    for (JsonElement imageElement: ImageArray) { // Limit naar 1
-                        JsonObject imageObject = imageElement.getAsJsonObject();
-                        albumArt = imageObject.get("url").getAsString();
-                    }
+                    JsonArray imageArray = albumObject.getAsJsonArray("images");
+                    JsonObject firstImageObject = imageArray.get(1).getAsJsonObject(); // Get the first image object
+                    albumArt = firstImageObject.get("url").getAsString(); // Get the URL from the first image object
+
                 }
                 Album album = new Album(0, albumName, artistName, albumRelease, albumLink, albumArt);
-
+                this.albumRepository.save(album);
                 return album;
             } else {
                 System.out.println("Request failed: " + responseCode);

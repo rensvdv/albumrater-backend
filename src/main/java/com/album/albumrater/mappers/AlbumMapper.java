@@ -12,14 +12,14 @@ public class AlbumMapper {
         albumDTO.setId(album.getId());
         albumDTO.setTitle(album.getTitle());
         albumDTO.setArtist(album.getArtist());
+        albumDTO.setAlbumArt(album.getAlbumArt());
+        albumDTO.setAlbumLink(album.getAlbumLink());
+        albumDTO.setReleaseDate(album.getReleaseDate());
         return albumDTO;
     }
 
     public Album toAlbum(AlbumDTO albumDTO) {
-        Album album = new Album();
-        album.setId(albumDTO.getId());
-        album.setTitle(albumDTO.getTitle());
-        album.setArtist(albumDTO.getArtist());
+        Album album = new Album(albumDTO.getId(), albumDTO.getTitle(), albumDTO.getArtist(), albumDTO.getReleaseDate(), albumDTO.getAlbumLink(), albumDTO.getAlbumArt());
         return album;
     }
 }
