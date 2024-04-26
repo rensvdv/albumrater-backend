@@ -12,4 +12,5 @@ public class AlbumDTO {
     private String releaseDate;
     private String albumLink;
     private String albumArt;
+    private int totalTracks;
 }

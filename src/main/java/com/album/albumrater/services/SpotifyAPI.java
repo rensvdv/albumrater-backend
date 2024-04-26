@@ -51,13 +51,14 @@ public class SpotifyAPI {
                 String albumRelease = "";
                 String albumLink = "";
                 String albumArt = "";
-
+                int totalTracks = 0;
 
                 for (JsonElement json : itemsArray) {
                     JsonObject itemObject = json.getAsJsonObject();
                     JsonObject albumObject = itemObject.getAsJsonObject("album");
                     albumName = albumObject.get("name").getAsString();
                     albumRelease = albumObject.get("release_date").getAsString();
+                    totalTracks = albumObject.get("total_tracks").getAsInt();
 
                     JsonObject URLObject = albumObject.getAsJsonObject("external_urls");
                     albumLink = URLObject.get("spotify").getAsString();
@@ -67,7 +68,7 @@ public class SpotifyAPI {
                     albumArt = firstImageObject.get("url").getAsString(); // Get the URL from the first image object
 
                 }
-                Album album = new Album(0, albumName, artistName, albumRelease, albumLink, albumArt);
+                Album album = new Album(0, albumName, artistName, albumRelease, albumLink, albumArt, totalTracks);
                 this.albumRepository.save(album);
                 success = true;
             } else {

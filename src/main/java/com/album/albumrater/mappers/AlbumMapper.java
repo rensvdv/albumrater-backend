@@ -19,7 +19,7 @@ public class AlbumMapper {
     }
 
     public Album toAlbum(AlbumDTO albumDTO) {
-        Album album = new Album(albumDTO.getId(), albumDTO.getTitle(), albumDTO.getArtist(), albumDTO.getReleaseDate(), albumDTO.getAlbumLink(), albumDTO.getAlbumArt());
+        Album album = new Album(albumDTO.getId(), albumDTO.getTitle(), albumDTO.getArtist(), albumDTO.getReleaseDate(), albumDTO.getAlbumLink(), albumDTO.getAlbumArt(), albumDTO.getTotalTracks());
         return album;
     }
 }

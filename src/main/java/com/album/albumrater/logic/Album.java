@@ -26,4 +26,5 @@ public class Album {
     private String albumLink;
     private String albumArt;
 
+    private int totalTracks;
 }
