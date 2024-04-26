@@ -86,7 +86,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"albumId\": \"1\",\r\n    \"review\": \"review review :D\",\r\n    \"score\": \"8\"\r\n}",
+					"raw": "{\r\n    \"review\": \"review review :D\",\r\n    \"score\": \"8\",\r\n    \"albumId\":\"1\"\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
