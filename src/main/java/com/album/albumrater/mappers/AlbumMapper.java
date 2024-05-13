@@ -15,6 +15,7 @@ public class AlbumMapper {
         albumDTO.setAlbumArt(album.getAlbumArt());
         albumDTO.setAlbumLink(album.getAlbumLink());
         albumDTO.setReleaseDate(album.getReleaseDate());
+        albumDTO.setTotalTracks(album.getTotalTracks());
         return albumDTO;
     }
 
