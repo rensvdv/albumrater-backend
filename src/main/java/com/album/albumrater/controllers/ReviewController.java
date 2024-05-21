@@ -27,7 +27,29 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-     
+    @GetMapping("/{albumId}")
+    public ResponseEntity<List<ReviewDTO>> getReviewsFromAlbum(@PathVariable int albumId) {
+        List<Review> reviews = this.reviewService.getAllReviewsFromAlbum(albumId);
+
+        if(reviews.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
+        } else {
+            List<ReviewDTO> reviewDTOS = new ArrayList<>();
+
+            for(Review review : reviews) {
+                ReviewDTO reviewDTO = this.reviewMapper.toReviewDTO(review);
+                reviewDTOS.add(reviewDTO);
+            }
+            return ResponseEntity.ok(reviewDTOS);
+        }
+    }
+
+    @PostMapping()
+    public ResponseEntity<String> addReview(@RequestBody ReviewDTO reviewDTO) {
+        Review review = this.reviewMapper.toReview(reviewDTO);
+        this.reviewService.createReview(review);
+        return new ResponseEntity<>("Review created", HttpStatus.CREATED);
+    }
 
 
 }
