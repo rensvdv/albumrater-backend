@@ -19,10 +19,10 @@ import java.util.List;
 @RequestMapping("/api/albums")
 public class AlbumController {
 
-    private AlbumService albumService;
-    private AlbumMapper albumMapper;
+    private final AlbumService albumService;
+    private final AlbumMapper albumMapper;
 
-    private SpotifyAPI spotifyAPI;
+    private final SpotifyAPI spotifyAPI;
 
     @Autowired
     public AlbumController(AlbumService albumService, AlbumMapper albumMapper, SpotifyAPI spotifyAPI) {
