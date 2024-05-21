@@ -3,6 +3,7 @@ package com.album.albumrater.unittest.service;
 import com.album.albumrater.logic.Review;
 import com.album.albumrater.services.ReviewService;
 import com.album.albumrater.unittest.repo.ReviewRepoTest;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -31,17 +32,19 @@ public class ReviewServiceTest {
 
         boolean result = this.reviewService.createReview(review);
 
-        Assert.isTrue(result, "");
+        Assertions.assertThat(review).isNotNull();
+        Assertions.assertThat(result).isEqualTo(true);
     }
 
     @Test
     public void getReviewByAlbumIdTest(){
         int albumId = 1;
 
-        List<Review> reviews = this.reviewService.getAllReviewsFromAlbum(1);
+        List<Review> reviews = this.reviewService.getAllReviewsFromAlbum(albumId);
 
         for (Review review : reviews) {
-            Assert.isTrue(review.getAlbumId() == albumId, "");
+            Assertions.assertThat(review).isNotNull();
+            Assertions.assertThat(review.getAlbumId()).isEqualTo(albumId);
         }
     }
 }

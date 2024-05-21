@@ -1,6 +1,5 @@
 package com.album.albumrater.controllers;
 
-import com.album.albumrater.dto.AlbumDTO;
 import com.album.albumrater.dto.ReviewDTO;
 import com.album.albumrater.logic.Review;
 import com.album.albumrater.mappers.ReviewMapper;
