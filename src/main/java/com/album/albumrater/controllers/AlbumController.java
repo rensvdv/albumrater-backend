@@ -52,7 +52,7 @@ public class AlbumController {
             return ResponseEntity.ok(albumDTO);
         }
         else {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
@@ -71,7 +71,7 @@ public class AlbumController {
         if(success) {
             return new ResponseEntity<>("Album updated", HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>("Album not updated", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("Album not updated", HttpStatus.NOT_FOUND);
         }
     }
 

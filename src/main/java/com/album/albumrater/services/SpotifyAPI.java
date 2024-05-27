@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 @Service
 public class SpotifyAPI {
@@ -68,7 +69,7 @@ public class SpotifyAPI {
                     albumArt = firstImageObject.get("url").getAsString(); // Get the URL from the first image object
 
                 }
-                Album album = new Album(0, albumName, artistName, albumRelease, albumLink, albumArt, totalTracks);
+                Album album = new Album(0, albumName, artistName, albumRelease, albumLink, albumArt, totalTracks, new ArrayList<>());
                 this.albumRepository.save(album);
                 success = true;
             } else {

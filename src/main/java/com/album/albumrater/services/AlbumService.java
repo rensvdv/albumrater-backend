@@ -27,20 +27,17 @@ public class AlbumService {
 
     public boolean updateAlbum(Album album) {
         boolean success = false;
-        Optional<Album> oldAlbum = albumRepository.findById(album.getId());
-
-        if(oldAlbum.isPresent()) {
+        if (albumRepository.existsById(album.getId())) {
             albumRepository.save(album);
             success = true;
         }
         return success;
     }
 
+
     public boolean deleteAlbum(int id) {
         boolean success = false;
-        Optional<Album> album = albumRepository.findById(id);
-
-        if(album.isPresent()) {
+        if (albumRepository.existsById(id)) {
             albumRepository.deleteById(id);
             success = true;
         }

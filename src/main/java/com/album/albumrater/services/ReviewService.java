@@ -1,6 +1,7 @@
 package com.album.albumrater.services;
 
 import com.album.albumrater.logic.Review;
+import com.album.albumrater.repositories.AlbumRepository;
 import com.album.albumrater.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,12 @@ public class ReviewService {
 
 
     private final ReviewRepository reviewRepository;
+    private final AlbumRepository albumRepository;
 
     @Autowired
-    public ReviewService(ReviewRepository reviewRepository) {
+    public ReviewService(ReviewRepository reviewRepository, AlbumRepository albumRepository) {
         this.reviewRepository = reviewRepository;
+        this.albumRepository = albumRepository;
     }
 
     public List<Review> getAllReviewsFromAlbum(int albumId) {
@@ -24,9 +27,9 @@ public class ReviewService {
 
     public boolean createReview(Review review) {
         boolean success = false;
-        Review reviewResult = reviewRepository.save(review);
 
-        if(reviewResult.getId() > 0) {
+        if (albumRepository.existsById(review.getAlbum().getId())) {
+            Review savedReview = reviewRepository.save(review);
             success = true;
         }
         return success;

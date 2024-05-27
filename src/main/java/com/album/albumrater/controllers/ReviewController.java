@@ -46,8 +46,13 @@ public class ReviewController {
     @PostMapping()
     public ResponseEntity<String> addReview(@RequestBody ReviewDTO reviewDTO) {
         Review review = this.reviewMapper.toReview(reviewDTO);
-        this.reviewService.createReview(review);
-        return new ResponseEntity<>("Review created", HttpStatus.CREATED);
+        boolean success = this.reviewService.createReview(review);
+
+        if (success) {
+            return new ResponseEntity<>("Review created", HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("Review not created", HttpStatus.BAD_REQUEST);
+        }
     }
 
 
