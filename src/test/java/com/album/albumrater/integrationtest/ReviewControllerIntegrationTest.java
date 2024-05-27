@@ -84,6 +84,7 @@ public class ReviewControllerIntegrationTest {
         // Arrange
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setReview("Nice album");
+        reviewDTO.setAlbumId(1);
         reviewDTO.setScore(9);
 
         // Act & Assert
