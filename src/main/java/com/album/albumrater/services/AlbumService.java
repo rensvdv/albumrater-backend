@@ -5,6 +5,7 @@ import com.album.albumrater.repositories.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,14 +27,33 @@ public class AlbumService {
     }
 
     public boolean updateAlbum(Album album) {
-        boolean success = false;
-        if (albumRepository.existsById(album.getId())) {
-            albumRepository.save(album);
-            success = true;
-        }
-        return success;
-    }
+        Optional<Album> oldAlbumOpt = albumRepository.findById(album.getId());
 
+        if (oldAlbumOpt.isPresent()) {
+            Album oldAlbum = oldAlbumOpt.get();
+
+            // Update the old album's fields with the new values
+            oldAlbum.setTitle(album.getTitle());
+            oldAlbum.setArtist(album.getArtist());
+            oldAlbum.setReleaseDate(album.getReleaseDate());
+            oldAlbum.setAlbumLink(album.getAlbumLink());
+            oldAlbum.setAlbumArt(album.getAlbumArt());
+            oldAlbum.setTotalTracks(album.getTotalTracks());
+
+            // Ensure both collections are initialized to avoid null issues
+            if (oldAlbum.getReviews() == null) {
+                oldAlbum.setReviews(new ArrayList<>());
+            }
+            if (album.getReviews() != null) {
+                oldAlbum.getReviews().clear();
+                oldAlbum.getReviews().addAll(album.getReviews());
+            }
+
+            albumRepository.save(oldAlbum);
+            return true;
+        }
+        return false;
+    }
 
     public boolean deleteAlbum(int id) {
         boolean success = false;
