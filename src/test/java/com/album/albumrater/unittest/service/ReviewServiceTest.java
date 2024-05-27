@@ -1,14 +1,15 @@
 package com.album.albumrater.unittest.service;
 
+import com.album.albumrater.logic.Album;
 import com.album.albumrater.logic.Review;
 import com.album.albumrater.services.ReviewService;
-import com.album.albumrater.unittest.repo.ReviewRepoTest;
+import com.album.albumrater.unittest.repo.AlbumRepoMock;
+import com.album.albumrater.unittest.repo.ReviewRepoMock;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -17,18 +18,22 @@ import java.util.List;
 public class ReviewServiceTest {
 
     private ReviewService reviewService;
-    private ReviewRepoTest reviewRepoTest;
+    private ReviewRepoMock reviewRepoMock;
+    private AlbumRepoMock albumRepoMock;
 
     @BeforeEach
     void setup() throws Exception{
-        this.reviewRepoTest = new ReviewRepoTest();
-        this.reviewService = new ReviewService(reviewRepoTest);
+        this.reviewRepoMock = new ReviewRepoMock();
+        this.albumRepoMock = new AlbumRepoMock();
+        this.reviewService = new ReviewService(reviewRepoMock, albumRepoMock);
 
     }
 
     @Test
     public void createReviewTest(){
-        Review review = new Review(4, 1, "reviewtext", 8);
+        Album album = new Album();
+        album.setId(1);
+        Review review = new Review(4, album, "reviewtext", 8);
 
         boolean result = this.reviewService.createReview(review);
 
@@ -44,7 +49,7 @@ public class ReviewServiceTest {
 
         for (Review review : reviews) {
             Assertions.assertThat(review).isNotNull();
-            Assertions.assertThat(review.getAlbumId()).isEqualTo(albumId);
+            Assertions.assertThat(review.getAlbum().getId()).isEqualTo(albumId);
         }
     }
 }

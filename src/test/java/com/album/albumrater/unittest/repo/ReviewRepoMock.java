@@ -14,16 +14,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class ReviewRepoTest implements ReviewRepository {
+public class ReviewRepoMock implements ReviewRepository {
 
     public ArrayList<Review> reviews;
 
-    public ReviewRepoTest(){
+    public ReviewRepoMock(){
         reviews = new ArrayList<>();
-        Album album = new Album(1, "Title", "Artist", "", "", "", 10 );
-        Review review = new Review(1, 1, "review", 8);
-        Review review2 = new Review(2, 1, "review2", 6);
-        Review review3 = new Review(3, 1, "review3", 10);
+        Album album = new Album(1, "Title", "Artist", "", "", "", 10, new ArrayList<>() );
+        Review review = new Review(1, album, "review", 8);
+        Review review2 = new Review(2, album, "review2", 6);
+        Review review3 = new Review(3, album, "review3", 10);
         reviews.add(review);
         reviews.add(review2);
         reviews.add(review3);
@@ -33,7 +33,7 @@ public class ReviewRepoTest implements ReviewRepository {
     public List<Review> findAllByAlbumId(int albumId) {
         List<Review> reviewsByAlbumId = new ArrayList<>();
         for(int i = 0; i < reviews.size(); i++){
-            if(reviews.get(i).getAlbumId() == albumId){
+            if(reviews.get(i).getAlbum().getId() == albumId){
                 reviewsByAlbumId.add(reviews.get(i));
             }
         }
