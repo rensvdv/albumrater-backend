@@ -36,36 +36,39 @@ public class ReviewControllerIntegrationTest {
     @Mock
     private ReviewService reviewService;
 
+    private Album album;
 
     @BeforeEach
     public void setup() {
         albumRepository.deleteAll();
 
-        Album album = new Album();
+        album = new Album();
+        album.setId(1);
         album.setTitle("Test Album");
         albumRepository.save(album);
 
     }
-
-    /* @Test
+    /*
+    @Test
     public void testGetReviewsFromAlbum_ReturnsNoContent() throws Exception {
         // Arrange
-        when(reviewService.getAllReviewsFromAlbum(1)).thenReturn(new ArrayList<>());
+        when(reviewService.getAllReviewsFromAlbum(album.getId())).thenReturn(new ArrayList<>());
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/api/reviews/1")
                         .accept(MediaType.APPLICATION_JSON) // Set Accept header
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
-    }*/
+    }
 
-    /* @Test
+    @Test
     public void testGetReviewsFromAlbum_ReturnsReviews() throws Exception {
         // Arrange
         List<Review> reviews = new ArrayList<>();
-        reviews.add(new Review(1, 1, "Geweldig album", 8));
-        reviews.add(new Review(2, 1, "Wel een oke album", 4));
-        when(reviewService.getAllReviewsFromAlbum(1)).thenReturn(reviews);
+        reviews.add(new Review(1, album, "Geweldig album", 8));
+        reviews.add(new Review(2, album, "Wel een oke album", 4));
+
+        when(reviewService.getAllReviewsFromAlbum(album.getId())).thenReturn(reviews);
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/api/reviews/1")
@@ -73,11 +76,12 @@ public class ReviewControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].comment").value("Geweldig album"))
-                .andExpect(jsonPath("$[0].rating").value(8))
-                .andExpect(jsonPath("$[1].comment").value("Wel een oke album"))
-                .andExpect(jsonPath("$[1].rating").value(4));
+                .andExpect(jsonPath("$[0].review").value("Geweldig album"))
+                .andExpect(jsonPath("$[0].score").value(8))
+                .andExpect(jsonPath("$[1].review").value("Wel een oke album"))
+                .andExpect(jsonPath("$[1].score").value(4));
     }*/
+
 
     @Test
     public void testAddReview_ReturnsCreated() throws Exception {
