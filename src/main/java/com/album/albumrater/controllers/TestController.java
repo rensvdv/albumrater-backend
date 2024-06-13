@@ -16,8 +16,8 @@ public class TestController {
 
     @PostMapping("/reset")
     public ResponseEntity<Void> resetDatabase() {
+        //Wordt gebruikt bij end to end testing
         albumRepository.deleteAll();
-        // Optionally, reset other entities or set up initial state
         return ResponseEntity.ok().build();
     }
 }
