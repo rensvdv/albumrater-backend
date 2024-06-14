@@ -56,6 +56,7 @@ public class AlbumController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:5174/")
     @PostMapping()
     public ResponseEntity<String> addAlbum(@RequestBody AlbumDTO albumDTO) {
         Album album = albumMapper.toAlbum(albumDTO);
@@ -86,6 +87,7 @@ public class AlbumController {
         }
 
     }
+    @CrossOrigin(origins = "http://localhost:5174/")
     @PostMapping("/save")
     public ResponseEntity<String> spotifyAPI(@RequestBody SpotifyData spotifyData)
     {

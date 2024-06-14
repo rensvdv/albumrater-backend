@@ -32,7 +32,6 @@ public class AlbumService {
         if (oldAlbumOpt.isPresent()) {
             Album oldAlbum = oldAlbumOpt.get();
 
-            // Update the old album's fields with the new values
             oldAlbum.setTitle(album.getTitle());
             oldAlbum.setArtist(album.getArtist());
             oldAlbum.setReleaseDate(album.getReleaseDate());
@@ -40,7 +39,6 @@ public class AlbumService {
             oldAlbum.setAlbumArt(album.getAlbumArt());
             oldAlbum.setTotalTracks(album.getTotalTracks());
 
-            // Ensure both collections are initialized to avoid null issues
             if (oldAlbum.getReviews() == null) {
                 oldAlbum.setReviews(new ArrayList<>());
             }
