@@ -28,8 +28,7 @@ jobs:
     - name: Build and push Spring Boot backend
       uses: docker/build-push-action@v2
       with:
-        context: ./backend
-        file: ./backend/Dockerfile
+        context: .
         push: true
         tags: rensvelden/albumrater-backend:latest
 
