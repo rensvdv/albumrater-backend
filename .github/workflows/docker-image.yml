@@ -32,3 +32,6 @@ jobs:
         push: true
         tags: rensvelden/albumrater-backend:latest
 
+    - name: Log out from Dockerhub
+      run: docker logout https://hub.docker.com/
+
